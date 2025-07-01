@@ -1,9 +1,10 @@
 {
   "name": "front",
   "version": "1.0.0",
-  "description": "AskQL의 개발 환경 세팅 test repo입니다.",
-  "main": "index.js",
+  "description": "Front",
+  "main": "main.js",
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/AskQL/Front/issues"
   },
-  "homepage": "https://github.com/AskQL/Front#readme"
+  "homepage": "https://github.com/AskQL/Front#readme",
+  "devDependencies": {
+    "electron": "^37.1.0"
+  }
 }
