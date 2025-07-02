@@ -1,49 +1,42 @@
 {
-  "name": "front",
+  "name": "askql-front",
   "version": "1.0.0",
-  "description": "Front",
+  "description": "AskQL Electron Application",
   "main": "main.js",
-  "scripts": {
-    "start": "electron .",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder"
-  },
+  "author": "AskQL Team",
+  "license": "ISC",
+  "homepage": "https://github.com/AskQL/Front#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AskQL/Front.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/AskQL/Front/issues"
   },
-  "homepage": "https://github.com/AskQL/Front#readme",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --publish never"
+  },
   "devDependencies": {
     "electron": "^37.1.0",
-    "electron-builder": "^26.0.12" // electron-builder 버전에 맞춰주세요
+    "electron-builder": "^26.0.12"
   },
   "build": {
-    "appId": "AskQL", //애플리케이션 ID 설정
+    "appId": "com.askql.askql-app",
+    "productName": "AskQL",
+    "files": [
+      "main.js",
+      "package.json",
+      "build/"
+    ],
     "mac": {
-      "category": "your.app.category",
-      "target": [
-        "dmg",
-        "zip"
-      ]
+      "category": "public.app-category.developer-tools",
+      "icon": "build/icon.icns",
+      "target": "dmg"
     },
     "win": {
-      "target": [
-        "nsis",
-        "zip"
-      ]
-    },
-    "linux": {
-      "target": [
-        "AppImage",
-        "deb"
-      ]
+      "icon": "build/icon.ico",
+      "target": "nsis"
     }
   }
 }
