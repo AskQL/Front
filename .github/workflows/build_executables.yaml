@@ -1,0 +1,78 @@
+# .github/workflows/build_executables.yml
+name: Build and Release AskQL App
+
+# GitHub 웹사이트의 'Releases' 탭에서 'Publish release' 버튼을 눌렀을 때만 파이프라인이 실행
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Build for ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix: # 빌드할 OS 목록
+        include:
+          - os: macos-latest
+            platform: macos
+            ext: dmg
+          - os: windows-latest
+            platform: windows
+            ext: exe
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20 # Node.js 버전
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build application
+        run: npm run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: askql-app-${{ matrix.platform }}
+          path: dist/
+
+  release:
+    name: Upload Release Assets
+    needs: build # build job이 완료된 후에 실행
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Upload Release Asset (macOS)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: artifacts/askql-app-macos/*.dmg
+          asset_name: askql-app-${{ github.event.release.tag_name }}-macos.dmg
+          asset_content_type: application/octet-stream
+
+      - name: Upload Release Asset (Windows)
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: artifacts/askql-app-windows/*.exe
+          asset_name: askql-app-${{ github.event.release.tag_name }}-windows.exe
+          asset_content_type: application/octet-stream
