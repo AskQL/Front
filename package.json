@@ -1,6 +1,6 @@
 {
   "name": "askql-front",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "AskQL Electron Application",
   "main": "main.js",
   "author": "AskQL Team",
@@ -27,7 +27,8 @@
     "files": [
       "main.js",
       "package.json",
-      "build/"
+      "build/",
+      "dist/"
     ],
     "mac": {
       "category": "public.app-category.developer-tools",
