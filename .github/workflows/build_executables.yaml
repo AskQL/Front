@@ -1,7 +1,6 @@
 # .github/workflows/build_executables.yml
 name: Build and Release AskQL App
 
-# GitHub 웹사이트의 'Releases' 탭에서 'Publish release' 버튼을 눌렀을 때만 파이프라인이 실행
 on:
   release:
     types: [published]
@@ -11,24 +10,16 @@ env:
 
 jobs:
   build:
-    name: Build for ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-
     strategy:
-      matrix: # 빌드할 OS 목록
-        include:
-          - os: macos-latest
-            platform: macos
-            ext: dmg
-          - os: windows-latest
-            platform: windows
-            ext: exe
+      matrix:
+        os: [macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Set up Node.js from .nvmrc
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -37,41 +28,45 @@ jobs:
       - name: Install dependencies
         run: npm cache clean --force && npm install
 
-      - name: Build application
-        run: npm run build
+      - name: Build the app
+        run: |
+          if [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+            npm run build -- --mac
+          else
+            npm run build -- --win
+          fi
+        shell: bash
 
-      - name: Upload build artifacts
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: askql-app-${{ matrix.platform }}
-          path: dist
+          name: dist-${{ matrix.os }}
+          path: |
+            dist/*.dmg
+            dist/*.exe
 
   release:
-    name: Upload Release Assets
-    needs: build # build job이 완료된 후에 실행
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: write
+      actions: write
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Download build artifacts
+      - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
+          pattern: dist-*
+          merge-multiple: true
           path: dist
 
       - name: Create Release and Upload Assets
-        id: create_release
         uses: softprops/action-gh-release@v2
         with:
-          # .dmg와 .exe 설치 파일만 업로드 대상으로 지정합니다.
           files: |
             dist/*.dmg
             dist/*.exe
 
-  # 워크플로우 완료 즉시 아티팩트 삭제
   cleanup:
     name: Cleanup artifacts
     needs: [build, release]
@@ -83,6 +78,6 @@ jobs:
         uses: geekyeggo/delete-artifact@v4
         with:
           name: |
-            askql-app-macos
-            askql-app-windows
+            dist-macos-latest
+            dist-windows-latest
           failOnError: false
