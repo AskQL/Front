@@ -44,7 +44,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: askql-app-${{ matrix.platform }}
-          path: dist/
+          path: dist
 
   release:
     name: Upload Release Assets
@@ -60,25 +60,14 @@ jobs:
         with:
           path: dist
 
-      - name: Upload Release Asset (macOS)
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+      - name: Create Release and Upload Assets
+        id: create_release
+        uses: softprops/action-gh-release@v2
         with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: artifacts/askql-app-macos/*.dmg
-          asset_name: askql-app-${{ github.event.release.tag_name }}-macos.dmg
-          asset_content_type: application/octet-stream
-
-      - name: Upload Release Asset (Windows)
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-        with:
-          upload_url: ${{ github.event.release.upload_url }}
-          asset_path: artifacts/askql-app-windows/*.exe
-          asset_name: askql-app-${{ github.event.release.tag_name }}-windows.exe
-          asset_content_type: application/octet-stream
+          # .dmg와 .exe 설치 파일만 업로드 대상으로 지정합니다.
+          files: |
+            dist/*.dmg
+            dist/*.exe
 
   # 워크플로우 완료 즉시 아티팩트 삭제
   cleanup:
