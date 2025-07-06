@@ -60,21 +60,6 @@ jobs:
         with:
           path: dist
 
-      # 아티팩트 경로 확인(디버깅용)
-      - name: Debug - List all artifacts
-        run: |
-          echo "=== 전체 아티팩트 구조 ==="
-          find artifacts -type f -ls
-          echo ""
-          echo "=== DMG 파일 찾기 ==="
-          find artifacts -name "*.dmg" -type f
-          echo ""
-          echo "=== EXE 파일 찾기 ==="
-          find artifacts -name "*.exe" -type f
-          echo ""
-          echo "=== 각 폴더 내용 ==="
-          ls -la artifacts/*/
-
       - name: Upload Release Asset (macOS)
         uses: actions/upload-release-asset@v1
         env:
