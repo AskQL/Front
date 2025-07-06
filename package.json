@@ -27,8 +27,7 @@
     "files": [
       "main.js",
       "package.json",
-      "build/",
-      "dist/"
+      "build/"
     ],
     "mac": {
       "category": "public.app-category.developer-tools",

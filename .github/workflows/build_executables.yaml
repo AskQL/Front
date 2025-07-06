@@ -6,6 +6,9 @@ on:
   release:
     types: [published]
 
+env:
+  NODE_VERSION: "20"
+
 jobs:
   build:
     name: Build for ${{ matrix.os }}
@@ -28,14 +31,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20 # Node.js 버전
+          node-version: ${{ env.NODE_VERSION }}
           cache: "npm"
 
       - name: Install dependencies
-        run: npm install
+        run: npm cache clean --force && npm install
 
       - name: Build application
         run: npm run build
+
+      # 빌드 결과 확인(디버깅용)
+      - name: List build output
+        run: ls -la dist/
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
@@ -55,7 +62,22 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
-          path: artifacts
+          path: dist
+
+      # 아티팩트 경로 확인(디버깅용)
+      - name: Debug - List all artifacts
+        run: |
+          echo "=== 전체 아티팩트 구조 ==="
+          find artifacts -type f -ls
+          echo ""
+          echo "=== DMG 파일 찾기 ==="
+          find artifacts -name "*.dmg" -type f
+          echo ""
+          echo "=== EXE 파일 찾기 ==="
+          find artifacts -name "*.exe" -type f
+          echo ""
+          echo "=== 각 폴더 내용 ==="
+          ls -la artifacts/*/
 
       - name: Upload Release Asset (macOS)
         uses: actions/upload-release-asset@v1
@@ -76,3 +98,19 @@ jobs:
           asset_path: artifacts/askql-app-windows/*.exe
           asset_name: askql-app-${{ github.event.release.tag_name }}-windows.exe
           asset_content_type: application/octet-stream
+
+  # 워크플로우 완료 즉시 아티팩트 삭제
+  cleanup:
+    name: Cleanup artifacts
+    needs: [build, release]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Delete artifacts
+        uses: geekyeggo/delete-artifact@v4
+        with:
+          name: |
+            askql-app-macos
+            askql-app-windows
+          failOnError: false
