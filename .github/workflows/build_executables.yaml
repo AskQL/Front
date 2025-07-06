@@ -50,6 +50,8 @@ jobs:
     name: Upload Release Assets
     needs: build # build job이 완료된 후에 실행
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout repository
