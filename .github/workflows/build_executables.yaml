@@ -1,5 +1,5 @@
 # .github/workflows/build_executables.yml
-name: Build and Release AskQL App
+name: Build and Release QGenie
 
 on:
   release:
@@ -52,6 +52,7 @@ jobs:
     permissions:
       contents: write
       actions: write
+
 
     steps:
       - name: Download all artifacts

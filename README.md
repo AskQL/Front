@@ -1,6 +1,6 @@
-# AskQL APP
+# QGenie APP
 
-이 프로젝트는 AskQL 서비스의 ~를 제공합니다. ~목표로 합니다.
+이 프로젝트는 QGenie 서비스의 ~를 제공합니다. ~목표로 합니다.
 
 ---
 
@@ -8,7 +8,7 @@
 
 ### **Electron 앱 - 개발 환경 설정 가이드**
 
-이 가이드는 AskQL Electron 애플리케이션의 초기 설정 및 빌드 프로세스를 설명합니다.
+이 가이드는 QGenie Electron 애플리케이션의 초기 설정 및 빌드 프로세스를 설명합니다.
 
 1. **개발 환경 설정**
 
@@ -30,17 +30,17 @@
 
    ```json
    {
-     "name": "askql-api",
+     "name": "QGenie",
      "version": "0.0.1",
-     "description": "AskQL Electron Application",
+     "description": "QGenie Electron Application",
      "main": "main.js", // 이 줄이 main.js 파일을 가리키는지 확인하세요.
-     "author": "AskQL Team",
+     "author": "QGenie Team",
      "license": "ISC",
      "scripts": {
        "start": "electron ." // Electron 앱 실행을 위한 스크립트를 추가합니다.
      },
      "devDependencies": {
-       "electron": "^37.1.0" // 설치된 Electron 버전이 여기에 있는지 확인하세요.
+       "electron": "^37.2.0" // 설치된 Electron 버전이 여기에 있는지 확인하세요.
      }
    }
    ```
@@ -61,8 +61,8 @@
    ```json
    {
      "build": {
-       "appId": "com.askql.askql-app", // 고유한 애플리케이션 ID
-       "productName": "AskQL", // 생성될 애플리케이션 파일의 이름 (예: AskQL.dmg, AskQL Setup.exe)
+       "appId": "com.qgenie.app", // 고유한 애플리케이션 ID
+       "productName": "QGenie", // 생성될 애플리케이션 파일의 이름 (예: QGenie.dmg, QGenie Setup.exe)
        "files": [
          "main.js",
          "package.json",

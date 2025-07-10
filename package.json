@@ -1,29 +1,29 @@
 {
-  "name": "askql-front",
+  "name": "QGenie",
   "version": "0.0.1",
-  "description": "AskQL Electron Application",
+  "description": "QGenie Electron Application",
   "main": "main.js",
-  "author": "AskQL Team",
+  "author": "Queryus",
   "license": "ISC",
-  "homepage": "https://github.com/AskQL/Front#readme",
+  "homepage": "https://github.com/Queryus/QGenie_app#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/AskQL/Front.git"
+    "url": "git+https://github.com/Queryus/QGenie_app.git"
   },
   "bugs": {
-    "url": "https://github.com/AskQL/Front/issues"
+    "url": "https://github.com/Queryus/QGenie_app/issues"
   },
   "scripts": {
     "start": "electron .",
     "build": "electron-builder --publish never"
   },
   "devDependencies": {
-    "electron": "^37.1.0",
+    "electron": "^37.2.0",
     "electron-builder": "^26.0.12"
   },
   "build": {
-    "appId": "com.askql.askql-app",
-    "productName": "AskQL",
+    "appId": "com.Queryus.QGenie",
+    "productName": "QGenie",
     "files": [
       "main.js",
       "package.json",
