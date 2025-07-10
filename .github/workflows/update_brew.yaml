@@ -1,0 +1,56 @@
+name: Update Homebrew
+
+on:
+  repository_dispatch:
+    types: [new-release-update-brew]
+
+jobs:
+  update-tap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out homebrew-qgenie
+        uses: actions/checkout@v4
+        with:
+          repository: Queryus/homebrew-qgenie
+          token: ${{ secrets.TAP_REPO_TOKEN }}
+
+      - name: Prepare update variables
+        run: |
+          echo "NEW_VERSION=$(echo "${{ github.event.client_payload.version }}" | sed 's/^v//')" >> $GITHUB_ENV
+          echo "DOWNLOAD_URL=${{ github.event.client_payload.download_url }}" >> $GITHUB_ENV
+
+      # 3. .dmg 파일을 다운로드합니다.
+      - name: Download release asset
+        run: curl -L -o asset.dmg "${{ env.DOWNLOAD_URL }}"
+      
+      # 4. 다운로드한 파일의 SHA256 값을 계산합니다.
+      - name: Calculate SHA256
+        run: echo "NEW_SHA256=$(shasum -a 256 asset.dmg | awk '{print $1}')" >> $GITHUB_ENV
+
+      # 5. Cask 파일의 url, version, sha256 값을 모두 교체합니다.
+      - name: Update Cask file
+        run: |
+          CASK_FILE="Casks/qgenie.rb"
+          sed -i.bak "s|url \".*\"|url \"${{ env.DOWNLOAD_URL }}\"|" "$CASK_FILE"
+          sed -i.bak "s/version \".*\"/version \"${{ env.NEW_VERSION }}\"/" "$CASK_FILE"
+          sed -i.bak "s/sha256 \".*\"/sha256 \"${{ env.NEW_SHA256 }}\"/" "$CASK_FILE"
+          rm "${CASK_FILE}.bak"
+
+      # 6. 변경된 파일을 커밋하고 푸시합니다.
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add Casks/qgenie.rb
+
+          COMMIT_SUBJECT="chore: Update QGenie cask to ${{ github.event.client_payload.version }}"
+          COMMIT_BODY=$(cat <<EOF
+          Update Homebrew Cask for the new QGenie release.
+
+          - Bumps cask version to ${{ github.event.client_payload.version }}.
+          - Updates the download URL and SHA256 hash for the new asset.
+          EOF
+          )
+
+          git commit -m "$COMMIT_SUBJECT" -m "$COMMIT_BODY"
+          git push

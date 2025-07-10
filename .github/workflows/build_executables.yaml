@@ -1,0 +1,79 @@
+# .github/workflows/build_executables.yml
+name: Build and Release QGenie
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js from .nvmrc
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm cache clean --force && npm install
+
+      - name: Build the app
+        run: npm run build -- --${{ matrix.os == 'macos-latest' && 'mac' || 'win' }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ matrix.os }}
+          path: |
+            dist/*.dmg
+            dist/*.exe
+          retention-days: 14 # Artifacts 보존 기간 설정
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          pattern: dist-*
+          merge-multiple: true
+          path: dist
+
+      - name: Create Release and Upload Assets
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          body: ${{ github.event.release.body }}
+          files: |
+            dist/*.dmg
+            dist/*.exe
+
+      - name: Get DMG Download URL
+        id: get_dmg_url
+        run: |
+          URL=$(echo '${{ steps.create_release.outputs.assets }}' | jq -r '.[] | select(.name | endswith(".dmg")) | .browser_download_url')
+          echo "dmg_url=${URL}" >> $GITHUB_OUTPUT
+
+      - name: Dispatch Homebrew Tap Update
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.RELEASE_TOKEN }}
+          repository: Queryus/homebrew-qgenie
+          event-type: new-release-update-brew
+          client-payload: >-
+            {
+              "version": "${{ github.ref_name }}",
+              "download_url": "${{ steps.get_dmg_url.outputs.dmg_url }}"
+            }
