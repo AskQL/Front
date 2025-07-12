@@ -161,4 +161,7 @@ brew uninstall --cask qgenie
 
 # 관련 설정 파일까지 모두 깨끗하게 삭제하기
 brew uninstall --cask --zap qgenie
+
+# tap 제거
+brew untap queryus/qgenie
 ```
