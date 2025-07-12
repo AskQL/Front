@@ -1,0 +1,46 @@
+appId: com.Queryus.QGenie
+productName: QGenie
+directories:
+  output: release
+  buildResources: build
+files:
+  - from: ./out
+    to: ./
+  - ./package.json
+asarUnpack:
+  - resources/**
+win:
+  icon: build/icon.ico
+  target: nsis
+nsis:
+  artifactName: ${name}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  createDesktopShortcut: always
+mac:
+  category: public.app-category.developer-tools
+  icon: build/icon.icns
+  target: dmg
+  entitlementsInherit: build/entitlements.mac.plist
+  extendInfo:
+    - NSCameraUsageDescription: Application requests access to the device's camera.
+    - NSMicrophoneUsageDescription: Application requests access to the device's microphone.
+    - NSDocumentsFolderUsageDescription: Application requests access to the user's Documents folder.
+    - NSDownloadsFolderUsageDescription: Application requests access to the user's Downloads folder.
+  notarize: false
+dmg:
+  artifactName: ${name}-${version}.${ext}
+linux:
+  target:
+    - AppImage
+    - deb
+  maintainer: Queryus
+  category: Utility
+appImage:
+  artifactName: ${name}-${version}.${ext}
+npmRebuild: false
+publish:
+  provider: github
+  owner: Queryus
+  repo: QGenie_app
+
