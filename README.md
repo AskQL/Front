@@ -127,3 +127,41 @@
 8.  만약 실패하였다면 인프라 담당자에게 문의해주세요.
 
 ---
+
+
+## 📦 패키지 매니저로 설치하기
+
+### 💻 Homebrew로 설치하기 (macOS)
+#### macOS 사용자는 Homebrew를 사용하여 QGenie를 간편하게 설치하고 관리할 수 있습니다.
+
+##### 1. 사전 준비: Homebrew 설치
+```bash
+# Homebrew가 설치되어 있지 않다면, 먼저 터미널을 열고 아래 명령어를 실행하여 Homebrew를 설치해주세요.
+/bin/bash -c "$(curl -fsSL [https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh](https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh))"
+```
+##### 2. 설치 방법
+```bash
+#Homebrew가 QGenie의 설치 정보를 찾을 수 있도록, 저희의 공식 리포지토리(Tap)를 등록해야 합니다. 이 과정은 PC 당 최초 한 번만 실행하면 됩니다.
+brew tap queryus/qgenie
+
+# Tap을 추가했다면, 이제 brew install 명령어로 QGenie를 설치할 수 있습니다.
+brew install --cask qgenie
+
+# 설치가 완료되면 macOS의 응용 프로그램(Applications) 폴더에 QGenie.app이 추가됩니다.
+```
+
+##### 3. 관리 방법
+```bash
+# QGenie의 새로운 버전이 출시되면, 아래 명령어로 간단하게 최신 버전으로 업데이트할 수 있습니다.
+brew upgrade --cask qgenie
+
+# QGenie를 시스템에서 제거하려면 uninstall 명령어를 사용합니다.
+# 앱만 간단히 삭제하기
+brew uninstall --cask qgenie
+
+# 관련 설정 파일까지 모두 깨끗하게 삭제하기
+brew uninstall --cask --zap qgenie
+
+# tap 제거
+brew untap queryus/qgenie
+```
