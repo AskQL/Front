@@ -2,7 +2,8 @@
   "name": "QGenie",
   "version": "0.0.1",
   "description": "QGenie Electron Application",
-  "main": "main.js",
+  "type": "module",
+  "main": "./out/main/index.js",
   "author": "Queryus",
   "license": "ISC",
   "homepage": "https://github.com/Queryus/QGenie_app#readme",
@@ -14,29 +15,62 @@
     "url": "https://github.com/Queryus/QGenie_app/issues"
   },
   "scripts": {
+    "format": "prettier --write .",
+    "lint": "eslint --cache .",
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
+    "typecheck:web": "tsc --noEmit -p tsconfig.web.json --composite false",
+    "typecheck": "npm run typecheck:node && npm run typecheck:web",
     "start": "electron .",
-    "build": "electron-builder --publish never"
+    "dev": "electron-vite dev -w",
+    "build:electron-app": "npm run typecheck && electron-vite build",
+    "build": "electron-builder ${@}",
+    "postinstall": "electron-builder install-app-deps",
+    "build:unpack": "npm run build:electron-app && npm run build -- --dir",
+    "build:win": "npm run build:electron-app && npm run build -- --win",
+    "build:mac": "npm run build:electron-app && npm run build -- --mac",
+    "build:linux": "npm run build:electron-app && npm run build -- --linux",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ]
+  },
+  "dependencies": {
+    "@electron-toolkit/preload": "^3.0.1",
+    "@electron-toolkit/utils": "^4.0.0",
+    "clsx": "^2.1.1",
+    "electron-updater": "^6.3.9",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "electron": "^37.2.0",
-    "electron-builder": "^26.0.12"
-  },
-  "build": {
-    "appId": "com.Queryus.QGenie",
-    "productName": "QGenie",
-    "files": [
-      "main.js",
-      "package.json",
-      "build/"
-    ],
-    "mac": {
-      "category": "public.app-category.developer-tools",
-      "icon": "build/icon.icns",
-      "target": "dmg"
-    },
-    "win": {
-      "icon": "build/icon.ico",
-      "target": "nsis"
-    }
+    "@electron-toolkit/eslint-config-prettier": "^3.0.0",
+    "@electron-toolkit/eslint-config-ts": "^3.0.0",
+    "@electron-toolkit/tsconfig": "^1.0.1",
+    "@tailwindcss/postcss": "^4.0.0",
+    "@tailwindcss/vite": "^4.0.0",
+    "@types/node": "^22.14.1",
+    "@types/react": "^19.1.1",
+    "@types/react-dom": "^19.1.2",
+    "@vitejs/plugin-react": "^4.6.0",
+    "autoprefixer": "^10.4.21",
+    "electron": "^37.1.0",
+    "electron-builder": "^26.0.12",
+    "electron-vite": "^3.1.0",
+    "eslint": "^9.24.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "postcss": "^8.5.6",
+    "prettier": "^3.5.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.2.6"
   }
 }
