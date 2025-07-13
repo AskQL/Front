@@ -1,0 +1,13 @@
+commit_msg_file=$1
+commit_msg=$(head -n1 "$commit_msg_file")
+
+regex="^(feat|fix|bugfix|comment|docs|style|refactor|test|chore|perf)(\(.+\))?: .+"
+
+if ! echo "$commit_msg" | grep -qE "$regex"; then
+  echo "Aborting commit."
+  echo "Your commit message does not follow the conventional commit format."
+  echo "Example: 'feat(api): add new endpoint'"
+  echo "Allowed types: feat, fix, bugfix, comment, docs, style, refactor, test, chore, perf"
+  exit 1
+fi
+
