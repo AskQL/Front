@@ -4,9 +4,8 @@ directories:
   output: dist
   buildResources: build
 files:
-  - from: out
-    to: .
-  - package.json
+  - "out/**"
+  - "package.json"
 asarUnpack:
   - resources/**
 win:
