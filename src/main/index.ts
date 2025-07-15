@@ -56,6 +56,9 @@ app.on('window-all-closed', () => {
   }
 })
 
+/**
+ * NOTE: sandbox 설정으로 현재 작동은 X
+ */
 ipcMain.on('mailto-external', (_event, mailtoUrl: string) => {
   if (mailtoUrl.startsWith('mailto:')) {
     shell.openExternal(mailtoUrl)

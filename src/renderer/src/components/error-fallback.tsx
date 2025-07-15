@@ -1,6 +1,14 @@
 import { JSX, useCallback, useEffect, useRef } from 'react'
 import { toast } from 'sonner'
 
+/**
+ * 에러 바운더리에 걸렸을 때 콜백되는 함수
+ *
+ * NOTE: 에러 메시지 공유는 sandbox 설정으로 동작 안함 (논의 필요)
+ *
+ * @param param0 error
+ * @returns error page
+ */
 export default function ErrorFallback({ error }: { error: Error }): JSX.Element {
   const hasShownToast = useRef(false)
 
