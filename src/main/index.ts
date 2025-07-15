@@ -55,3 +55,9 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 })
+
+ipcMain.on('mailto-external', (_event, mailtoUrl: string) => {
+  if (mailtoUrl.startsWith('mailto:')) {
+    shell.openExternal(mailtoUrl)
+  }
+})
