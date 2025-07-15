@@ -1,12 +1,12 @@
 appId: com.Queryus.QGenie
 productName: QGenie
 directories:
-  output: release
+  output: dist
   buildResources: build
 files:
-  - from: ./out
-    to: ./
-  - ./package.json
+  - from: out
+    to: .
+  - package.json
 asarUnpack:
   - resources/**
 win:
