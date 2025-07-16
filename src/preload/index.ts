@@ -1,9 +1,15 @@
-import { contextBridge } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 
 // Custom APIs for renderer
 const api = {
-  versions: process.versions
+  versions: process.versions,
+  send: <T = unknown>(channel: string, data?: T) => {
+    const validChannels = ['open-sub-window', 'ping', 'mailto-external']
+    if (validChannels.includes(channel)) {
+      ipcRenderer.send(channel, data)
+    }
+  }
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to
