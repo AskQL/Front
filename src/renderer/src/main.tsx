@@ -8,7 +8,7 @@ import ErrorFallback from '@/components/error-fallback'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Toaster />
+    <Toaster position="top-center" />
     <ErrorBoundary
       FallbackComponent={ErrorFallback}
       onError={(error, info) => {

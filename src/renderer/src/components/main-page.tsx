@@ -1,5 +1,5 @@
 import { JSX } from 'react'
-import AppIcon from '../../../../resources/icon.png'
+import AppIcon from '@renderer/assets/icon.svg'
 import { Button } from '@/components/ui/button'
 
 /**
@@ -14,8 +14,8 @@ export function MainPage(): JSX.Element {
         className="bg-black text-white"
         onClick={() => {
           window.api.send('open-sub-window', {
-            width: 600,
-            height: 400,
+            width: 800,
+            height: 600,
             route: '/new-connection'
           })
         }}
