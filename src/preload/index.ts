@@ -5,11 +5,12 @@ import { electronAPI } from '@electron-toolkit/preload'
 const api = {
   versions: process.versions,
   send: <T = unknown>(channel: string, data?: T) => {
-    const validChannels = ['open-sub-window', 'ping', 'mailto-external']
+    const validChannels = ['open-sub-window', 'ping', 'open-external']
     if (validChannels.includes(channel)) {
       ipcRenderer.send(channel, data)
     }
-  }
+  },
+  closeCurrentWindow: () => ipcRenderer.send('close-current-window')
 }
 
 // Use `contextBridge` APIs to expose Electron APIs to

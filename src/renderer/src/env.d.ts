@@ -9,5 +9,6 @@ interface Window {
     }
     send: (channel: string, data?: unknown) => void
     on?: (channel: string, listener: (...args: unknown[]) => void) => void
+    closeCurrentWindow: () => void
   }
 }
