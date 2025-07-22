@@ -10,8 +10,28 @@ const topNavItems: NavItem[] = [
 ]
 
 const bottomNavItems: NavItem[] = [
-  { id: 'settings', icon: Settings },
-  { id: 'add', icon: Plus }
+  {
+    id: 'settings',
+    icon: Settings,
+    onClick: () => {
+      window.api.send('open-sub-window', {
+        width: 840,
+        height: 576,
+        route: '/setting'
+      })
+    }
+  },
+  {
+    id: 'add',
+    icon: Plus,
+    onClick: () => {
+      window.api.send('open-sub-window', {
+        width: 800,
+        height: 610,
+        route: '/connection-wizard'
+      })
+    }
+  }
 ]
 
 function NavButton({ item }: { item: NavItem }): React.JSX.Element {
