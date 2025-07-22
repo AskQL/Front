@@ -54,7 +54,7 @@ function InputField({
       <label className="text-sm text-white font-semibold pb-1.5">{label}</label>
       <div className="relative">
         <Input
-          type={isNumber ? 'number' : 'text'}
+          type={isNumber ? 'number' : field === 'password' ? 'password' : 'text'}
           value={value}
           onChange={handleChange}
           placeholder={placeholder || label}
