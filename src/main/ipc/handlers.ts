@@ -9,9 +9,9 @@ export function registerIpcHandlers(mainWindow?: BrowserWindow): void {
     console.log('pong')
   })
 
-  ipcMain.on('mailto-external', (_event, mailtoUrl: string) => {
-    if (mailtoUrl.startsWith('mailto:')) {
-      shell.openExternal(mailtoUrl)
+  ipcMain.on('open-external', (_event, url: string) => {
+    if (/^(mailto:|http)/.test(url)) {
+      shell.openExternal(url)
     }
   })
 
@@ -27,4 +27,9 @@ export function registerIpcHandlers(mainWindow?: BrowserWindow): void {
       })
     }
   )
+
+  ipcMain.on('close-current-window', (event) => {
+    const win = BrowserWindow.fromWebContents(event.sender)
+    win?.close()
+  })
 }

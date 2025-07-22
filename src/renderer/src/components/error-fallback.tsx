@@ -30,7 +30,7 @@ export default function ErrorFallback({ error }: { error: Error }): JSX.Element 
      * TODO: 오류 보고 메일 수정
      */
     const mailtoLink = `mailto:sample@sample.com?subject=${subject}&body=${body}`
-    window.electron?.ipcRenderer?.send?.('mailto-external', mailtoLink)
+    window.api.send('open-external', mailtoLink)
   }, [error])
 
   useEffect(() => {

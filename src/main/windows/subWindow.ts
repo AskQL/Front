@@ -23,8 +23,8 @@ type SubWindowOptions = {
  * @author 6-keem
  *
  * @example
- * // 600x400 크기의 모달 'new-connection' 경로로 열기
- * createSubWindow(600, 400, '/new-connection')
+ * // 600x400 크기의 모달 '/connection-wizard' 경로로 열기
+ * createSubWindow(600, 400, '/connection-wizard')
  */
 export function createSubWindow({
   width,
@@ -42,14 +42,21 @@ export function createSubWindow({
     width,
     height,
     parent,
-    modal,
-    resizable: false,
+    modal: modal,
+    show: false,
+    resizable: true,
+    minWidth: width,
+    minHeight: height,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../../out/preload/index.cjs'),
       sandbox: true
     }
+  })
+
+  subWindow.on('ready-to-show', () => {
+    subWindow?.show()
   })
 
   subWindow.on('closed', () => {

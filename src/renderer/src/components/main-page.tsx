@@ -15,8 +15,8 @@ export function MainPage(): JSX.Element {
         onClick={() => {
           window.api.send('open-sub-window', {
             width: 800,
-            height: 600,
-            route: '/new-connection'
+            height: 610,
+            route: '/connection-wizard'
           })
         }}
       >
