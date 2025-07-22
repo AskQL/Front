@@ -8,7 +8,9 @@ let mainWindow: BrowserWindow | null = null
 export function createMainWindow(): void {
   mainWindow = new BrowserWindow({
     width: 1280,
+    minWidth: 1280,
     height: 832,
+    minHeight: 832,
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
