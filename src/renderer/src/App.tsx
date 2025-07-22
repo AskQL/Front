@@ -1,5 +1,5 @@
 import { HashRouter, Route, Routes } from 'react-router-dom'
-import { MainPage } from '@/components/main-page'
+import { MainPage } from '@/components/workspace/main-page'
 import { ConnectionWizard } from '@/components/connection-wizard/wizard-modal'
 
 function App(): React.JSX.Element {
