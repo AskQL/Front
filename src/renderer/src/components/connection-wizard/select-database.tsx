@@ -1,6 +1,6 @@
 import { Search, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { DATABASES, DatabaseInfo } from './type'
+import { DATABASES, DatabaseInfo } from './wizard.type'
 import { Input } from '@/components/ui/input'
 import { useState } from 'react'
 import { DatabaseButton } from './database-button'

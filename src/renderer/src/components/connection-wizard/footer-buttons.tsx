@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Button } from '../ui/button'
-import { DB_SETUP_STEPS, DBSetupStep } from './type'
+import { DB_SETUP_STEPS, DBSetupStep } from './wizard.type'
 
 interface FooterButtonsProp {
   activeTab: DBSetupStep

@@ -1,4 +1,4 @@
-import { DB_SETUP_STEPS, DBSetupStep } from './type'
+import { DB_SETUP_STEPS, DBSetupStep } from './wizard.type'
 
 interface SidebarProp {
   activeTab: DBSetupStep

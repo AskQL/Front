@@ -1,5 +1,5 @@
 import { X } from 'lucide-react'
-import { ConnectionDeatil } from './type'
+import { ConnectionDeatil } from './wizard.type'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 import { cn } from '@/lib/utils'
