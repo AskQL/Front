@@ -23,6 +23,16 @@ interface SettingSideBarProp {
   activeTab: SettingSection
   setActiveTab: (activeTab: SettingSection) => void
 }
+
+/**
+ * 설정 모달의 사이드바
+ *
+ * @author 6-keem
+ *
+ * @param activeTab 현재 활성화 탭 (상태)
+ * @param setActiveTab 활성화 탭 변경 함수
+ * @returns JSX.Element
+ */
 export default function SettingSideBar({
   activeTab,
   setActiveTab

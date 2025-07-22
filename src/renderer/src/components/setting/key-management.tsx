@@ -3,6 +3,13 @@ import { X } from 'lucide-react'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
 
+/**
+ * API 설정 화면
+ *
+ * @author 6-keem
+ *
+ * @returns JSX.Element
+ */
 export default function KeyManagement(): React.JSX.Element {
   const [apiKey, setApiKey] = useState('')
 
