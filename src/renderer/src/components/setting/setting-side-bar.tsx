@@ -28,7 +28,7 @@ export default function SettingSideBar({
   setActiveTab
 }: SettingSideBarProp): React.JSX.Element {
   return (
-    <div className="flex-[1] w-full bg-[#1c1c1c] self-stretch px-4 py-6 inline-flex flex-col justify-start items-start">
+    <div className="flex-[1] w-full bg-[#1c1c1c] self-stretch px-4 py-6 inline-flex flex-col justify-start items-start gap-2">
       {SETTING_ITEMS.map((settingItem) => {
         return (
           <div
