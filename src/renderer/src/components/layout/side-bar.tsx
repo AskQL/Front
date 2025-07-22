@@ -6,7 +6,7 @@ import type { NavItem } from '../workspace/types'
 
 const topNavItems: NavItem[] = [
   { id: 'database', icon: Database, active: true },
-  { id: 'tags', icon: Tag, disabled: true } // DB 연결 후에 disabled: false
+  { id: 'tags', icon: Tag, disabled: true } // TODO: DB 연결 후에 disabled: false
 ]
 
 const bottomNavItems: NavItem[] = [

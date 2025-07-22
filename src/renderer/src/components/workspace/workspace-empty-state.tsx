@@ -65,7 +65,7 @@ export function WorkspaceEmptyState(): React.JSX.Element {
 
       <button
         onClick={handleConnectClick}
-        className="pl-5 pr-7 py-3 bg-gradient-to-b from-violet-700 to-violet-800 rounded-2xl outline-2 outline-offset-[-2px] outline-white/20 inline-flex justify-center items-center gap-4 hover:from-violet-600 hover:to-violet-700 transition-colors"
+        className="pl-5 pr-7 py-3 bg-gradient-to-b from-violet-700 to-violet-800 rounded-2xl outline-2 outline-offset-[-2px] outline-white/20 inline-flex justify-center items-center gap-4 hover:from-violet-600 hover:to-violet-700 transition-colors hover:cursor-pointer"
       >
         <Plus className="size-4 stroke-neutral-200" />
         <span className="text-neutral-200 text-sm font-bold font-['Pretendard'] leading-tight">
