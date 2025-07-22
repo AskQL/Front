@@ -21,7 +21,10 @@ export const DB_SETUP_STEPS: StepInfo[] = [
 
 export enum Database {
   MySQL = 'MySQL',
+  MariaDB = 'MariaDB',
   PostgreSQL = 'PostgreSQL',
+  SQLite = 'SQLite',
+  MicrosoftSQLServer = 'MicrosoftSQLServer',
   Oracle = 'Oracle'
 }
 
@@ -33,7 +36,10 @@ export interface DatabaseInfo {
 
 export const DATABASES: DatabaseInfo[] = [
   { key: Database.MySQL, label: 'MySQL', icon: '/mysql.png' },
+  { key: Database.MariaDB, label: 'MariaDB', icon: '/mariadb.png' },
   { key: Database.PostgreSQL, label: 'PostgreSQL', icon: '/postgresql.png' },
+  { key: Database.SQLite, label: 'SQLite', icon: '/sqlite.png' },
+  { key: Database.MicrosoftSQLServer, label: 'Microsoft SQL Server', icon: '/microsoft.png' },
   { key: Database.Oracle, label: 'Oracle', icon: '/oracle.png' }
 ]
 

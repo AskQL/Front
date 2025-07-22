@@ -6,6 +6,14 @@ interface ConfirmSettingsProp {
 
 type ConnectionValue = string | number | null
 
+/**
+ * DB 연결 정보 확인 및 완료
+ *
+ * @author 6-keem
+ *
+ * @param connectionDetail DB 연결 정보 (상태)
+ * @returns JSX.Element
+ */
 export default function ConfirmSettings({
   connectionDetail
 }: ConfirmSettingsProp): React.JSX.Element {

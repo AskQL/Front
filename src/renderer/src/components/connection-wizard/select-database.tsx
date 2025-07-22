@@ -12,14 +12,26 @@ interface SelectDatabaseProp {
   setConnectionName: (name: string) => void
 }
 
+/**
+ * DB 선택 페이지
+ *
+ * @author 6-keem
+ * @param selectedDatabase 선택한 DB 변수 (상태)
+ * @param setSelectedDatabase 선택한 DB 업데이트 함수
+ * @param connectionName DB 연결 닉네임 변수 (상태)
+ * @param setConnectionName DB 연결 닉네임 업데이터 함수
+ * @returns JSX.Element
+ */
 export function SelectDatabase({
   selectedDatabase,
   setSelectedDatabase,
   connectionName,
   setConnectionName
 }: SelectDatabaseProp): React.JSX.Element {
+  // 검색어
   const [searchText, setSearchText] = useState<string>('')
 
+  // 검색어 기반 DB 필터링
   const filteredDatabases = DATABASES.filter((db) =>
     db.label.toLowerCase().includes(searchText.toLowerCase())
   )
@@ -55,17 +67,22 @@ export function SelectDatabase({
         </div>
         <div
           className="
-              w-full h-64 overflow-y-scroll
-              self-stretch p-5 bg-gradient-to-b from-[#1d1d1d] to-neutral-800 rounded-lg outline-1 
-              outline-offset-[-1px] outline-[#383838] grid grid-cols-4 gap-4 place-items-start"
+            w-full h-[290px] overflow-y-scroll
+            self-stretch p-4 bg-gradient-to-b from-[#1d1d1d] to-neutral-800 rounded-lg outline-1 
+            outline-offset-[-1px] outline-[#383838] grid 
+            grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8
+            gap-0.5 place-items-start"
         >
+          {/* DB 종류 랜더링 */}
           {filteredDatabases.map((databaseInfo) => (
-            <DatabaseButton
-              key={databaseInfo.key}
-              databaseInfo={databaseInfo}
-              isSelected={selectedDatabase?.key === databaseInfo.key}
-              setSelectedDatabase={setSelectedDatabase}
-            />
+            <div key={databaseInfo.key} className="w-full flex items-center justify-center">
+              <DatabaseButton
+                key={databaseInfo.key}
+                databaseInfo={databaseInfo}
+                isSelected={selectedDatabase?.key === databaseInfo.key}
+                setSelectedDatabase={setSelectedDatabase}
+              />
+            </div>
           ))}
         </div>
       </div>

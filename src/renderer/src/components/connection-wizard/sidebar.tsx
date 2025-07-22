@@ -13,14 +13,13 @@ interface SidebarProp {
 const Sidebar = ({ activeTab }: SidebarProp): React.JSX.Element => {
   const activeIndex = DB_SETUP_STEPS.findIndex((step) => step.key === activeTab)
   return (
-    <div className="w-[280px] bg-[#1C1C1C] self-stretch p-6 inline-flex flex-col justify-start items-start gap-2">
+    <div className="w-full self-stretch p-6 inline-flex flex-col justify-start items-start gap-2">
       {DB_SETUP_STEPS.map((step, index) => {
         let status: 'done' | 'active' | 'upcoming' = 'upcoming'
         if (index < activeIndex) status = 'done'
         else if (index === activeIndex) status = 'active'
 
-        const baseClass =
-          'w-[232px] p-2 rounded-lg inline-flex justify-start items-center gap-[13px]'
+        const baseClass = 'w-full p-2 rounded-lg inline-flex justify-start items-center gap-[13px]'
 
         const statusClass = {
           done: 'bg-[#272727] text-[#808080]',
