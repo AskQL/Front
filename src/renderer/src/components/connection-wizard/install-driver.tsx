@@ -1,5 +1,5 @@
 import { AlertCircle, CheckCircle2, FolderOpen } from 'lucide-react'
-import { DatabaseInfo } from './type'
+import { DatabaseInfo } from './wizard.type'
 import { Button } from '../ui/button'
 import { useEffect, useState } from 'react'
 

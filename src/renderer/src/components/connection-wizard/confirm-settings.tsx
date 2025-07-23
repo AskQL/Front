@@ -1,4 +1,4 @@
-import { DATABASES, ConnectionDeatil } from './type'
+import { DATABASES, ConnectionDeatil } from './wizard.type'
 
 interface ConfirmSettingsProp {
   connectionDetail: ConnectionDeatil

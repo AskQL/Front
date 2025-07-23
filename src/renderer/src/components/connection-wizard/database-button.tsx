@@ -1,4 +1,4 @@
-import { DatabaseInfo } from './type'
+import { DatabaseInfo } from './wizard.type'
 
 interface DatabaseButtonProps {
   databaseInfo: DatabaseInfo
